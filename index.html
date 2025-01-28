@@ -9,52 +9,67 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
+            background-color: #f4f4f9;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
+        .login-container {
+            width: 400px;
             padding: 20px;
-            border: 1px solid #ccc;
+            background: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
-        input, button {
-            width: 100%;
+        .login-container h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        input {
+            width: calc(100% - 20px);
             padding: 10px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
         }
         button {
-            background-color: #007bff;
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
             color: white;
+            font-size: 16px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3;
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="login-container">
         <h1>Login</h1>
-        <input type="email" id="email" placeholder="Email" required>
-        <input type="password" id="password" placeholder="Password" required>
+        <input type="email" id="email" placeholder="Enter your email" required>
+        <input type="password" id="password" placeholder="Enter your password" required>
         <button onclick="login()">Login</button>
     </div>
 
     <script>
         // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
-            authDomain: "panel-auth-134b7.firebaseapp.com",
-            projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.firebasestorage.app",
-            messagingSenderId: "892746068340",
-            appId: "1:892746068340:web:f8c4d5b798e8bc48447c21",
+       const firebaseConfig = {
+         apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
+         authDomain: "panel-auth-134b7.firebaseapp.com",
+         projectId: "panel-auth-134b7",
+         storageBucket: "panel-auth-134b7.firebasestorage.app",
+         messagingSenderId: "892746068340",
+         appId: "1:892746068340:web:f8c4d5b798e8bc48447c21"
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
@@ -63,9 +78,9 @@
             const password = document.getElementById("password").value;
 
             auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
+                .then(() => {
                     console.log("Login successful");
-                    window.location.href = "dashboard.html";
+                    window.location.href = "dashboard.html"; // Redirect to dashboard
                 })
                 .catch((error) => {
                     alert("Error: " + error.message);
