@@ -10,7 +10,6 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
         }
         header {
             background-color: #007bff;
@@ -77,15 +76,18 @@
             apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
             authDomain: "panel-auth-134b7.firebaseapp.com",
             projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.firebasestorage.app",
+            storageBucket: "panel-auth-134b7.firebaseapp.com",
             messagingSenderId: "892746068340",
             appId: "1:892746068340:web:f8c4d5b798e8bc48447c21",
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
+        // Ensure user is authenticated
         auth.onAuthStateChanged((user) => {
             if (!user) {
+                alert("You must log in first.");
                 window.location.href = "index.html";
             }
         });
