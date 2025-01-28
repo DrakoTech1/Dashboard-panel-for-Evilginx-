@@ -1,0 +1,144 @@
+/* General Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f6fa;
+}
+
+/* Login Page */
+.login-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 350px;
+}
+
+.login-container h2 {
+    text-align: center;
+    color: #4a4e69;
+    margin-bottom: 1rem;
+}
+
+.login-container button {
+    background: #4f46e5;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-container button:hover {
+    background: #4338ca;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.4);
+}
+
+/* Dashboard Page */
+.dashboard-bg {
+    background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+    height: 100vh;
+    display: flex;
+}
+
+.sidebar {
+    width: 250px;
+    background: #24292e;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h1 {
+    text-align: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid #40444b;
+    font-size: 1.5rem;
+}
+
+.sidebar a {
+    padding: 1rem 1.5rem;
+    text-decoration: none;
+    color: #d1d5db;
+    transition: all 0.3s ease;
+}
+
+.sidebar a:hover {
+    background: #4f46e5;
+    color: #ffffff;
+}
+
+.menu-button {
+    border-radius: 6px;
+    text-align: left;
+    font-size: 1.1rem;
+}
+
+/* Content Section */
+.main-content {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+.section-box {
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.section-box h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #4a4e69;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    text-align: left;
+    padding: 0.8rem;
+    border: 1px solid #d1d5db;
+}
+
+table th {
+    background: #f3f4f6;
+    font-weight: bold;
+    color: #4b5563;
+}
+
+table tr:hover {
+    background: #f9fafb;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
