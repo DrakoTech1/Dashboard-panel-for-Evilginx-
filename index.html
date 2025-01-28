@@ -3,207 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ethical Penetration Testing Dashboard</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Login</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js"></script>
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
         }
-        .dashboard-bg {
-            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
-        }
-        .menu-button {
-            transition: transform 0.2s;
-        }
-        .menu-button:hover {
-            transform: scale(1.05);
-        }
-        .pagination button {
-            margin: 0 5px;
-            padding: 5px 10px;
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
             border: 1px solid #ccc;
-            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
             border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
             cursor: pointer;
         }
-        .pagination button:hover {
-            background: #f0f0f0;
-        }
-        .active-page {
-            background: #007BFF;
-            color: white;
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
-<body class="bg-gray-100 h-screen">
-    <!-- Login Page -->
-    <div id="login-page" class="h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600">
-        <div class="bg-white p-6 rounded-xl shadow-md w-96">
-            <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">Login</h2>
-            <form id="login-form">
-                <div class="mb-4">
-                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                    <input type="email" id="email" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <div class="mb-6">
-                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                    <input type="password" id="password" class="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500" required>
-                </div>
-                <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-300">Login</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Dashboard -->
-    <div id="dashboard" class="hidden dashboard-bg">
-        <div class="flex h-screen">
-            <!-- Sidebar -->
-            <aside class="w-64 bg-gray-900 text-white flex flex-col">
-                <div class="p-6 text-center font-bold text-2xl border-b border-gray-700">Dashboard</div>
-                <nav class="flex-grow">
-                    <button id="generate-link" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Generate Link</button>
-                    <button id="view-cookies" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">View Cookies</button>
-                    <button id="view-sessions" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Captured Sessions</button>
-                    <button id="logout" class="menu-button block px-6 py-3 hover:bg-gray-700 text-lg">Logout</button>
-                </nav>
-            </aside>
-            <!-- Main Content -->
-            <main class="flex-grow p-8">
-                <div id="content" class="text-2xl font-semibold">Welcome to your Dashboard!</div>
-                <div id="table-container" class="hidden">
-                    <table class="w-full border-collapse border border-gray-300 mt-4 text-left">
-                        <thead>
-                            <tr>
-                                <th class="border border-gray-300 p-2">#</th>
-                                <th class="border border-gray-300 p-2">Data</th>
-                                <th class="border border-gray-300 p-2">Timestamp</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table-body"></tbody>
-                    </table>
-                    <div class="pagination mt-4 flex justify-center" id="pagination"></div>
-                </div>
-            </main>
-        </div>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button onclick="login()">Login</button>
     </div>
 
     <script>
+        // Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
-            authDomain: "panel-auth-134b7.firebaseapp.com",
-            projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.firebasestorage.app",
-            messagingSenderId: "892746068340",
-            appId: "1:892746068340:web:f8c4d5b798e8bc48447c21"
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_PROJECT_ID.appspot.com",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
         };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
 
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.getAuth(app);
+        function login() {
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
 
-        const loginPage = document.getElementById('login-page');
-        const dashboard = document.getElementById('dashboard');
-        const content = document.getElementById('content');
-        const tableContainer = document.getElementById('table-container');
-        const tableBody = document.getElementById('table-body');
-        const pagination = document.getElementById('pagination');
-
-        const ITEMS_PER_PAGE = 10;
-
-        loginPage.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            try {
-                await firebase.signInWithEmailAndPassword(auth, email, password);
-                loginPage.classList.add('hidden');
-                dashboard.classList.remove('hidden');
-            } catch (error) {
-                console.error(error);
-            }
-        });
-
-        document.getElementById('logout').addEventListener('click', async () => {
-            await firebase.signOut(auth);
-            dashboard.classList.add('hidden');
-            loginPage.classList.remove('hidden');
-        });
-
-        async function fetchData(endpoint) {
-            try {
-                const response = await axios.get(endpoint);
-                return response.data;
-            } catch (error) {
-                console.error('Failed to fetch data:', error);
-                return [];
-            }
-        }
-
-        function paginateData(data) {
-            let currentPage = 1;
-            const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
-
-            function renderTable(page) {
-                tableBody.innerHTML = '';
-                const start = (page - 1) * ITEMS_PER_PAGE;
-                const end = start + ITEMS_PER_PAGE;
-                const rows = data.slice(start, end);
-                rows.forEach((row, index) => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                        <td class="border border-gray-300 p-2">${start + index + 1}</td>
-                        <td class="border border-gray-300 p-2">${row.data}</td>
-                        <td class="border border-gray-300 p-2">${row.timestamp}</td>
-                    `;
-                    tableBody.appendChild(tr);
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    console.log("Login successful");
+                    window.location.href = "dashboard.html";
+                })
+                .catch((error) => {
+                    alert("Error: " + error.message);
                 });
-
-                pagination.innerHTML = '';
-                for (let i = 1; i <= totalPages; i++) {
-                    const button = document.createElement('button');
-                    button.innerText = i;
-                    button.classList.add('page-button');
-                    if (i === currentPage) button.classList.add('active-page');
-                    button.addEventListener('click', () => {
-                        currentPage = i;
-                        renderTable(i);
-                    });
-                    pagination.appendChild(button);
-                }
-            }
-            renderTable(1);
         }
-
-        document.getElementById('generate-link').addEventListener('click', async () => {
-            const link = await fetchData('/generate-link');
-            alert('Generated Link: ' + link);
-        });
-
-        document.getElementById('view-cookies').addEventListener('click', async () => {
-            const cookies = await fetchData('/cookies');
-            paginateData(cookies);
-            content.innerHTML = 'Captured Cookies';
-            tableContainer.classList.remove('hidden');
-        });
-
-        document.getElementById('view-sessions').addEventListener('click', async () => {
-            const sessions = await fetchData('/sessions');
-            paginateData(sessions);
-            content.innerHTML = 'Captured Sessions';
-            tableContainer.classList.remove('hidden');
-        });
-
-        firebase.onAuthStateChanged(auth, (user) => {
-            if (user) {
-                loginPage.classList.add('hidden');
-                dashboard.classList.remove('hidden');
-            } else {
-                loginPage.classList.remove('hidden');
-                dashboard.classList.add('hidden');
-            }
-        });
     </script>
 </body>
 </html>
