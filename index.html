@@ -118,12 +118,21 @@
     </div>
 
     <script>
-        // Redirect from login to dashboard
-        const loginForm = document.getElementById('login-form');
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            window.location.href = 'dashboard.html';
-        });
+    // Redirect from login to dashboard within the same page
+    const loginForm = document.getElementById('login-form');
+    const loginPage = document.getElementById('login-page');
+    const dashboard = document.getElementById('dashboard');
+
+    loginForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        loginPage.style.display = 'none'; // Hide the login page
+        dashboard.classList.remove('hidden'); // Show the dashboard
+    });
+
+    // Placeholder for Evilginx API integration
+    // Use fetch or Axios to call Evilginx API endpoints for link generation and session data retrieval
+</script>
+
 
         // Placeholder for Evilginx API integration
         // Use fetch or Axios to call Evilginx API endpoints for link generation and session data retrieval
