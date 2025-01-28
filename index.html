@@ -9,7 +9,8 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            background-color: #6a1b9a; /* Purple background */
+            color: #fff;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -23,10 +24,10 @@
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
+            color: #333;
         }
         .login-container h1 {
             margin-bottom: 20px;
-            color: #333;
         }
         input {
             width: calc(100% - 20px);
@@ -41,13 +42,13 @@
             margin: 10px 0;
             border: none;
             border-radius: 5px;
-            background: #007bff;
+            background: #6a1b9a;
             color: white;
             font-size: 16px;
             cursor: pointer;
         }
         button:hover {
-            background: #0056b3;
+            background: #4a148c;
         }
     </style>
 </head>
@@ -65,13 +66,20 @@
             apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
             authDomain: "panel-auth-134b7.firebaseapp.com",
             projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.firebaseapp.com",
+            storageBucket: "panel-auth-134b7.appspot.com",
             messagingSenderId: "892746068340",
             appId: "1:892746068340:web:f8c4d5b798e8bc48447c21",
         };
 
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
+
+        // Redirect to dashboard if already logged in
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                window.location.href = "dashboard.html";
+            }
+        });
 
         function login() {
             const email = document.getElementById("email").value;
