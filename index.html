@@ -3,69 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Login - Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         .login-box {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
         }
     </style>
 </head>
-<body class="h-screen flex justify-center items-center">
-    <div class="login-box w-96">
-        <h2 class="text-3xl font-extrabold text-center mb-6 text-gray-800">Login</h2>
-        <input type="email" id="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-md mb-4" required>
-        <input type="password" id="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-md mb-6" required>
-        <button onclick="login()" class="w-full bg-blue-600 text-white py-3 rounded-md text-lg font-semibold hover:bg-blue-700 transition duration-300">
-            Login
-        </button>
-        <p id="error-message" class="text-red-500 text-center mt-3 hidden"></p>
+<body>
+    <div class="login-box">
+        <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+        <form id="login-form">
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" class="w-full p-2 border rounded" required>
+            </div>
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" class="w-full p-2 border rounded" required>
+            </div>
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700">Login</button>
+        </form>
     </div>
 
-    <!-- ✅ Correct Firebase Script -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
-
     <script>
-        // ✅ Initialize Firebase Properly
         const firebaseConfig = {
             apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
             authDomain: "panel-auth-134b7.firebaseapp.com",
             projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            storageBucket: "panel-auth-134b7.firebasestorage.app",
+            messagingSenderId: "892746068340",
+            appId: "1:892746068340:web:f8c4d5b798e8bc48447c21"
         };
+
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        function login() {
-            const email = document.getElementById("email").value;
-            const password = document.getElementById("password").value;
-            if (!email || !password) {
-                document.getElementById("error-message").innerText = "Please enter both email and password.";
-                document.getElementById("error-message").classList.remove("hidden");
-                return;
-            }
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
 
             auth.signInWithEmailAndPassword(email, password)
-                .then((userCredential) => {
-                    console.log("Login successful:", userCredential.user);
-                    window.location.href = "dashboard.html"; // ✅ Redirect After Login
+                .then(() => {
+                    window.location.href = 'dashboard.html';
                 })
-                .catch((error) => {
-                    console.error("Login error:", error.message);
-                    document.getElementById("error-message").innerText = "Login failed: " + error.message;
-                    document.getElementById("error-message").classList.remove("hidden");
+                .catch(error => {
+                    alert('Login failed: ' + error.message);
                 });
-        }
+        });
     </script>
 </body>
 </html>
