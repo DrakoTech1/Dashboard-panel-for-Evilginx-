@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
@@ -31,12 +29,17 @@
         <p id="error-message" class="text-red-500 text-center mt-3 hidden"></p>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+
     <script>
+        // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
             authDomain: "panel-auth-134b7.firebaseapp.com",
             projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.appspot.com",
+            storageBucket: "Ypanel-auth-134b7.appspot.com",
             messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
             appId: "YOUR_APP_ID"
         };
